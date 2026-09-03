@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poseidon — CCO hidráulico CEDAE</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    :root {
+      --bg: #070b12;
+      --panel: #101826;
+      --line: #1e2d44;
+      --text: #e8eef8;
+      --muted: #8aa0b8;
+      --cyan: #3ec6c9;
+      --amber: #e3b341;
+      --red: #e05a6a;
+      --ok: #4caf8a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, #0b1524, #102033);
+    }
+    header h1 { margin: 0; font-size: 1.15rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    header h1 span { color: var(--cyan); }
+    .banner {
+      background: #3a2a0a; color: var(--amber); font-size: 0.8rem;
+      padding: 6px 20px; letter-spacing: 0.08em; text-transform: uppercase;
+      border-bottom: 1px solid #5a4510;
+    }
+    main { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12px; padding: 12px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+    .card h2 { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    #map { height: 280px; border-radius: 8px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      background: #173044; color: var(--text); border: 1px solid var(--cyan);
+      padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+    }
+    button:hover { background: #1d3d55; }
+    .pill { display: inline-block; padding: 3px 8px; border-radius: 99px; font-size: 0.75rem; }
+    .normal { background: #143328; color: var(--ok); }
+    .alerta { background: #3a2e0c; color: var(--amber); }
+    .crítico, .critico { background: #3a1218; color: var(--red); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    td, th { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+    pre { background: #0a1018; padding: 8px; border-radius: 6px; overflow: auto; font-size: 0.75rem; max-height: 180px; }
+    canvas { width: 100%; height: 140px; }
+    .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+    .kpi { background: #0a121c; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+    .kpi b { display: block; font-size: 1.15rem; color: var(--cyan); }
+    .kpi span { font-size: 0.72rem; color: var(--muted); }
+    footer { padding: 8px 20px; color: var(--muted); font-size: 0.75rem; }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Poseidon <span>CCO</span></h1>
+    <div>CEDAE · produção de água · modelos consultivos</div>
+  </header>
+  <div class="banner">⚠ dados de demonstração — meta.live=false — sem escrita SCADA — sem LLM no laço</div>
+  <main>
+    <section class="card">
+      <h2>Sistemas produtores</h2>
+      <div class="kpis" id="kpis"></div>
+      <div id="map"></div>
+    </section>
+    <section class="card">
+      <h2>PSA · geosmina (laudo µg/L + ficocianina)</h2>
+      <p>Nunca sensor on-line ng/L. Pulso na captação chega à entrega após L/u.</p>
+      <div id="psa"></div>
+      <div class="row">
+        <button id="btnGeo">Simular pulso geosmina</button>
+        <button id="btnGuandu">Cenário Guandu 50 %</button>
+      </div>
+      <pre id="out">à espera de uma acção…</pre>
+    </section>
+    <section class="card">
+      <h2>Incidentes (fixture)</h2>
+      <table><thead><tr><th>Quando</th><th>Título</th><th>Severidade</th></tr></thead>
+        <tbody id="inc"></tbody></table>
+    </section>
+    <section class="card">
+      <h2>Demanda 1–48 h (LSTM + atenção)</h2>
+      <p>x<sub>t</sub> = [Q<sub>t</sub>, H<sub>t</sub>, rain<sub>t</sub>, temp<sub>t</sub>, ENSO] · horizonte clampado</p>
+      <canvas id="chart" width="640" height="140"></canvas>
+      <div class="row" style="margin-top:8px">
+        <label>Horizonte
+          <input id="hor" type="number" min="1" max="48" value="24"
+            style="width:4rem;background:#0a121c;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:4px" />
+        </label>
+        <button id="btnDem">Prever demanda</button>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Joukowsky · Δp = ρ c ΔV</h2>
+      <p>c padrão 1000 m/s (tubo rígido, documentado). ΔV = V<sub>i</sub> − V<sub>f</sub></p>
+      <div class="row">
+        <label>ΔV (m/s)
+          <input id="dv" type="number" step="0.1" value="1.2"
+            style="width:5rem;background:#0a121c;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:4px" />
+        </label>
+        <button id="btnHam">Calcular golpe</button>
+      </div>
+      <pre id="ham">—</pre>
+    </section>
+    <section class="card">
+      <h2>Perda de carga · Darcy / Hazen–Williams</h2>
+      <div class="row">
+        <label>L <input id="L" type="number" value="1000" style="width:5rem;background:#0a121c;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:4px" /></label>
+        <label>D <input id="D" type="number" value="0.8" step="0.05" style="width:5rem;background:#0a121c;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:4px" /></label>
+        <label>Q <input id="Q" type="number" value="0.4" step="0.05" style="width:5rem;background:#0a121c;color:var(--text);border:1px solid var(--line);border-radius:4px;padding:4px" /></label>
+        <button id="btnDw">Darcy</button>
+        <button id="btnHw">Hazen (empírico)</button>
+      </div>
+      <pre id="hl">—</pre>
+    </section>
+  </main>
+  <footer>Poseidon · código novo · MIT · 127.0.0.1:8877 · consultivo apenas</footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const API = "";
+    const map = L.map("map").setView([-22.76, -43.25], 9);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution: "&copy; OSM &copy; CARTO"
+    }).addTo(map);
+
+    function pill(regime) {
+      const cls = regime === "crítico" ? "crítico" : regime;
+      return `<span class="pill ${cls}">${regime}</span>`;
+    }
+    async function j(url, opt) {
+      const r = await fetch(API + url, opt);
+      return r.json();
+    }
+    function pretty(x) { return JSON.stringify(x, null, 2); }
+
+    async function loadSystems() {
+      const body = await j("/api/v1/systems");
+      const k = document.getElementById("kpis");
+      k.innerHTML = "";
+      for (const s of body.data.sistemas) {
+        k.innerHTML += `<div class="kpi"><b>${s.vazao_nominal_l_s.toLocaleString("pt-BR")} L/s</b><span>${s.nome}</span></div>`;
+        L.circleMarker([s.coords.lat, s.coords.lon], { radius: 8, color: "#3ec6c9" })
+          .bindPopup(`${s.nome}<br>${s.vazao_nominal_l_s} L/s<br>fixture`)
+          .addTo(map);
+      }
+    }
+    async function loadPsa() {
+      const body = await j("/api/v1/psa");
+      const d = body.data;
+      document.getElementById("psa").innerHTML =
+        `${pill(d.regime)} lab = ${d.lab_ug_l} µg/L · proxy ficocianina = ${d.bloom_proxy_ficocianina}`;
+    }
+    async function loadInc() {
+      const body = await j("/api/v1/incidents");
+      const tb = document.getElementById("inc");
+      tb.innerHTML = body.data.incidentes.map(i =>
+        `<tr><td>${i.quando || ""}</td><td>${i.titulo}</td><td>${pill(i.severidade)}</td></tr>`
+      ).join("");
+    }
+    function drawDemanda(arr) {
+      const c = document.getElementById("chart");
+      const ctx = c.getContext("2d");
+      const w = c.width, h = c.height;
+      ctx.fillStyle = "#0a121c"; ctx.fillRect(0, 0, w, h);
+      if (!arr || !arr.length) return;
+      const mn = Math.min(...arr), mx = Math.max(...arr);
+      const span = mx - mn || 1;
+      ctx.strokeStyle = "#3ec6c9"; ctx.lineWidth = 2; ctx.beginPath();
+      arr.forEach((v, i) => {
+        const x = i / (arr.length - 1) * (w - 8) + 4;
+        const y = h - 8 - (v - mn) / span * (h - 16);
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      });
+      ctx.stroke();
+    }
+    document.getElementById("btnGeo").onclick = async () => {
+      const body = await j("/api/v1/demo/geosmina", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lab_ug_l: 0.08, bloom_proxy: true })
+      });
+      document.getElementById("out").textContent = pretty(body);
+      document.getElementById("psa").innerHTML =
+        `entrega ${pill(body.data.psa_entrega)} · captação ${pill(body.data.psa_captação)} · t viagem ${(body.data.t_viagem_h).toFixed(2)} h`;
+    };
+    document.getElementById("btnGuandu").onclick = async () => {
+      const body = await j("/api/v1/demo/guandu-50", { method: "POST" });
+      document.getElementById("out").textContent = pretty(body);
+    };
+    document.getElementById("btnDem").onclick = async () => {
+      const h = document.getElementById("hor").value;
+      const body = await j("/api/v1/demanda?horizonte_h=" + h);
+      drawDemanda(body.data.demanda_m3_s);
+      document.getElementById("out").textContent = pretty({ horizonte: body.data.horizonte_h, clamp: body.data.clamp, n: body.data.demanda_m3_s.length });
+    };
+    document.getElementById("btnHam").onclick = async () => {
+      const dv = Number(document.getElementById("dv").value);
+      const body = await j("/api/v1/hydraulics/hammer", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ delta_v_m_s: dv })
+      });
+      document.getElementById("ham").textContent = pretty(body.data);
+    };
+    async function hl(method) {
+      const body = await j("/api/v1/hydraulics/headloss", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          L: Number(document.getElementById("L").value),
+          D: Number(document.getElementById("D").value),
+          Q: Number(document.getElementById("Q").value),
+          method
+        })
+      });
+      document.getElementById("hl").textContent = pretty(body.data);
+    }
+    document.getElementById("btnDw").onclick = () => hl("darcy");
+    document.getElementById("btnHw").onclick = () => hl("hazen");
+
+    loadSystems(); loadPsa(); loadInc();
+    document.getElementById("btnDem").click();
+  </script>
+</body>
+</html>
