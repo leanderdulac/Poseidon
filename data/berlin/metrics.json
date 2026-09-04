@@ -1,0 +1,82 @@
+{
+  "operator": "Berliner Wasserbetriebe (BWB)",
+  "city": "Berlin (DE) + parts of Brandenburg",
+  "year": 2025,
+  "population_served": 4571100,
+  "population_served_detail": {
+    "water_berlin_2024": 3897100,
+    "water_brandenburg_2024": 81000,
+    "water_total_2024": 3978100,
+    "sewage_berlin_2024": 3897100,
+    "sewage_brandenburg_2024": 674000,
+    "sewage_total_approx_2024": 4571100,
+    "berlin_city_population_2025": 3914000,
+    "notes": "EMAS 2025 Tab.4.1/4.2 = angeschlossene Einwohner 2024; GB 2025 = pop. estatística Berlim 3,914 Mio em 2025 (Amt für Statistik)."
+  },
+  "water_loss_pct": 0.87,
+  "water_loss_method": "PRIMARY official KPI = Infrastructure Leakage Index (ILI) per DVGW/IWA: ILI 2024=0.92, 2023=0.86, 2022=0.81 (target <1.5). Volume ratio used for water_loss_pct: Leitungsverluste Rohrnetz 1,934,860 m3 / Reinwasserverteilung 222.4e6 m3 = 0.87% (EMAS 2025). Verbal claims differ (BWB press 2021 ~2%; ZFK interview with BWB ~3%) — not used as primary. Also Rohrschadensquote 0.07/km/a (2023) and 0.06 (EMAS status 2024 vs DVGW low threshold 0.1).",
+  "sewage_treatment_pct": 99.8,
+  "production_l_s_or_m3d": "capacity 1,100,000 m3/d (12,731.5 L/s); sales ~217e6 m3/a 2025 (~594,114 m3/d / 6,876 L/s); sewage treated 257e6 m3/a 2025",
+  "production_detail": {
+    "works_capacity_m3_d": 1100000,
+    "works_capacity_l_s": 12731.5,
+    "avg_demand_stated_m3_d": 600000,
+    "water_sales_2025_mio_m3_a": 217,
+    "water_sales_2025_approx_m3_d": 594114,
+    "water_sales_2025_approx_l_s": 6876.3,
+    "water_sales_2025_gwf_mio_m3_a": 216.5,
+    "sewage_treated_2025_mio_m3_a": 257,
+    "sewage_dry_weather_capacity_stated_m3_d": 721000,
+    "wwtp_capacity_emas_2024_m3_d": 673500
+  },
+  "digital_assets": {
+    "scada_leitsystem": "3 Leitwarten (Friedrichshagen, Tegel, Beelitzhof); GE iFix SCADA modernization + ACRON historian (Segno report); EMAS mentions Leitsystem LISA for sewer; online transfer of key metering points",
+    "ami_smart_meters": "2024: 32,946 digital meters of 280,785 water meters (99.6% metering coverage); target 100% digital house meters by 2031 (EMAS Tab.13)",
+    "semaplus_ai": "SEMAplus ML sewer condition/strategy simulators in operational use at BWB since 2019 (KWB)",
+    "leak_detection": "Acoustic zone monitoring (AZ/Hydrophon loggers) + correlation; network sweep ~every 5–6 years (BWB 2021 press)",
+    "cco": "No public asset branded as 'CCO'; operations via Leitwarten / Leitsystem",
+    "digital_twin": "No official BWB GB/EMAS claim of city-wide digital twin; hydraulic models + SEMAplus + SCADA exist"
+  },
+  "quality_and_treatment_notes": {
+    "drinking_water": "Jahresmedianwerte 2025 for 9 waterworks published; complies with TrinkwV (BWB analysewerte PDF). No routine disinfection in normal operation (groundwater protection).",
+    "wastewater_removal": "BWB states ~97% retention of unsettled + biodegradable dissolved pollutants; N typically 85–88%, P >90% (BWB interview). Fourth-stage flocculation filtration / ozonation rollout ongoing.",
+    "sewer_connection": "Public sewer connection rate Berlin >99.8% (Abgeordnetenhaus answers)."
+  },
+  "climate_context": {
+    "source_mix": "~60% Uferfiltrat, ~30% precipitation recharge, ~10% artificial groundwater recharge (EMAS/Wasserkreislauf)",
+    "spree_dependency": "Lausitz lignite phase-out → lower Spree flow; ~70% of drinking water influenced by treated wastewater via bank filtrate/recharge (BWB 28580)",
+    "stormwater": "Combined sewer ~1/4 of city (inner S-Bahn ring); sponge city (Schwammstadt); CSO risk to Spree/Havel"
+  },
+  "open_data": {
+    "portal": "https://daten.berlin.de/",
+    "sewerage_wfs": "https://gdi.berlin.de/services/wfs/ua_kanalisation_2022",
+    "catalogue": "https://daten.berlin.de/datensaetze/entsorgung-von-regen-und-abwasser-2022-umweltatlas-wfs-e28cdf4f",
+    "water_analysis_catalogue": "https://daten.berlin.de/datensaetze/berliner-wasserbetriebe-wasseranalysedaten-der-wasserwerke",
+    "license_sewerage": "dl-de-zero-2.0"
+  },
+  "sources": [
+    "https://www.bwb.de/de/assets/downloads/2025_geschaeftsbericht_berliner_wasserbetriebe.pdf",
+    "https://www.bwb.de/de/assets/downloads/Umwelterklaerung-2025.pdf",
+    "https://www.bwb.de/de/kennzahlen.php",
+    "https://www.bwb.de/de/wasserkreislauf.php",
+    "https://www.bwb.de/de/wasserqualitaet.php",
+    "https://www.bwb.de/de/assets/downloads/analysewerte-wasserwerke.pdf",
+    "https://www.bwb.de/de/28580.php",
+    "https://www.bwb.de/de/29097_29323.php",
+    "https://www.bwb.de/de/pressemitteilungen-2021_26781.php",
+    "https://gwf-wasser.de/branche/infrastruktur-staerken-zukunft-sichern/",
+    "https://www.zfk.de/wasser-abwasser/wasser/das-rohr-war-noch-nicht-verhaltensauffaellig",
+    "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/SchrAnfr/S19-10002.pdf",
+    "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/SchrAnfr/S19-21195.pdf",
+    "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/DruckSachen/d19-0668.pdf",
+    "https://daten.berlin.de/datensaetze/entsorgung-von-regen-und-abwasser-2022-umweltatlas-wfs-e28cdf4f",
+    "https://gdi.berlin.de/services/wfs/ua_kanalisation_2022?SERVICE=WFS&REQUEST=GetCapabilities",
+    "https://gdi.berlin.de/data/ua_kanalisation_2022/docs/Datenformatbeschreibung_Kanalisation_2022.pdf",
+    "https://www.berlin.de/umweltatlas/wasser/regen-und-abwasser/2022/datengrundlage/",
+    "https://daten.berlin.de/datensaetze/berliner-wasserbetriebe-wasseranalysedaten-der-wasserwerke",
+    "https://kompetenz-wasser.de/de/forschung/dienstleistungen/semaplus",
+    "https://blueplanetberlin.de/wp-content/uploads/2022/12/Blue_Planet_2022_Nic-Lengemann_SEMAplus.pdf",
+    "https://segno.info/wp-content/uploads/2024/11/bericht_bwb.pdf"
+  ],
+  "retrieved_at": "2026-09-04"
+}

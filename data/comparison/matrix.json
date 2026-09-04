@@ -1,0 +1,61 @@
+{
+  "retrieved_at": "2026-09-04",
+  "rule": "Métodos de perda NÃO são intercambiáveis. Comparar direção e ordem de grandeza, não ponto a ponto.",
+  "rows": [
+    {
+      "city": "Rio / CEDAE",
+      "operator": "CEDAE (Companhia Estadual de Águas e Esgotos do Rio de Janeiro)",
+      "year": 2026,
+      "population_served": null,
+      "loss_value": 50.53,
+      "loss_method": "SINISA % distribuição (Estado 50.53%; mun. RJ 38.92%)",
+      "sewage_treatment_pct": null,
+      "production": "Guandu 45,000 L/s; Imunana-Laranjal 7,000 L/s; 10 RM systems >57,000 L/s",
+      "digital_headline": "CMA Botafogo 2026 (manancial); sem gêmeo de adutora público",
+      "comparable_caution": "Pós-concessão: CEDAE=atacado. Perdas SINISA ≠ ILI ≠ P104.3."
+    },
+    {
+      "city": "Singapura / PUB",
+      "operator": "PUB (Public Utilities Board), Singapore's National Water Agency",
+      "year": 2025,
+      "population_served": 6111200,
+      "loss_value": 7.2,
+      "loss_method": "Distribution Losses % (não L/conn·dia; não ILI)",
+      "sewage_treatment_pct": 100,
+      "production": "vendas ~21209 L/s (~1832444 m³/d); demanda ~440 mgd",
+      "digital_headline": "Smart Water Grid + ALF digital twin + 1500 sensores + AMI fase1 ~300k",
+      "comparable_caution": "Cidade-Estado verticalmente integrada (4 National Taps)."
+    },
+    {
+      "city": "Paris / Eau de Paris (+ SIAAP esgoto)",
+      "operator": "Eau de Paris (água) + SIAAP (esgoto metro)",
+      "year": 2025,
+      "population_served": 3000000,
+      "loss_value": 11.0,
+      "loss_method": "100 − rendimento P104.3 SISPEA (~11% em 2025)",
+      "sewage_treatment_pct": null,
+      "production": "504759 m3/d (média) ≈ 5842 L/s; 184,2 Mm³/ano (potável 2025)",
+      "digital_headline": "ICC/Datalab + ~2500–3000 acústicos; SIAAP MAGES RTC; STEA CCO",
+      "comparable_caution": "Água e esgoto são operadores distintos (como CEDAE×concessionárias)."
+    },
+    {
+      "city": "Berlim / BWB",
+      "operator": "Berliner Wasserbetriebe (BWB)",
+      "year": 2025,
+      "population_served": 4571100,
+      "loss_value": 0.87,
+      "loss_method": "ILI 0.92 (oficial) + volume 0.87% (EMAS 2024); verbal 2–3% não usar",
+      "sewage_treatment_pct": 99.8,
+      "production": "capacity 1,100,000 m3/d (12,731.5 L/s); sales ~217e6 m3/a 2025 (~594,114 m3/d / 6,876 L/s); sewage treated 257e6 m3/a 2025",
+      "digital_headline": "3 Leitwarten SCADA; AMI 33k/281k→100% 2031; SEMAplus esgoto desde 2019",
+      "comparable_caution": "Utilidade integrada; ILI é o KPI certo — % volume não é NRW IWA."
+    }
+  ],
+  "poseidon_actions": [
+    "Adotar envelope multi-método: SINISA_pct | SISPEA_P104 | ILI | DistLoss_pct com campo method obrigatório",
+    "Benchmark digital: ALF (PUB) e MAGES (SIAAP) como padrões de gêmeo/RTC a copiar no CCO",
+    "Capacidade Guandu 45000 L/s vs peers: PUB ~21k L/s vendas, Paris ~5.8k, Berlin cap 12.7k — Guandu sozinho é outlier de SPOF",
+    "Baixar WFS Berlim e setorização Paris como referência de open data GIS",
+    "Não usar perdas % de Berlim 0.87 contra 50% RJ sem converter metodologia"
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "operator": "PUB (Public Utilities Board), Singapore's National Water Agency",
+  "city": "Singapore (city-state / national utility)",
+  "year": 2025,
+  "population_served": 6111200,
+  "population_served_note": "Total population end-June 2025 = 6,111,200 (SingStat / Population in Brief). PUB reports 100% population served by tapped water and modern sanitation (ASR 2024/25, CY). Connections/accounts ≈ 1.7 million households and businesses (PUB press release 5 Feb 2025); ASR FY customers ~1.756 million accounts.",
+  "connections_or_accounts": 1700000,
+  "water_loss_pct": 7.2,
+  "water_loss_method": "Distribution Losses % of potable water network (PUB indicator since 2019; replaced Unaccounted for Water). Described as accounting for all possible leaks. CY2025 = 7.2% (MSE parliamentary reply 8 Apr 2026). ASR 2024/25 GRI also lists CY2022=7.5, CY2023=7.2, CY2024=7.1. Not reported as L/conn·day in public sources found.",
+  "sewage_treatment_pct": 100,
+  "sewage_treatment_note": "100% population with modern sanitation (PUB ASR); 100% domestic wastewater safely treated (SDG 6.3.1, 2024). Island-wide sewerage + Deep Tunnel Sewerage System (DTSS) to Water Reclamation Plants; used water recycled to NEWater.",
+  "production_l_s_or_m3d": {
+    "demand_approx_mgd": 440,
+    "demand_approx_note": "PUB states water demand currently about 440 million gallons a day (Water Loop page). Singapore historically quotes imperial gallons; 440 imp.mgd ≈ 2.00 million m3/d. Figure is approximate ('about').",
+    "sales_potable_2025_Mm3_yr": 515.5,
+    "sales_newater_2025_Mm3_yr": 153.8,
+    "sales_potable_2025_m3_d": 1411362,
+    "sales_newater_2025_m3_d": 421081,
+    "sales_total_2025_m3_d": 1832444,
+    "sales_total_2025_L_s": 21209,
+    "sales_unit": "SingStat Water Sales Annual — Million Cubic Metres Per Year; daily values = annual / 365.25. Sales ≠ production (excludes distribution losses)."
+  },
+  "digital_assets": [
+    "Smart Water Grid (SWG) — island-wide monitoring of ~6,000 km potable network",
+    "Anomaly Leak Finder (ALF) — high-fidelity digital twin + AI/ML leak detection/localization (Bentley iTwin/OpenFlows; deployed on Government Commercial Cloud)",
+    "Permanent leak detection sensors — 1,500 units; acoustic data loggers and smartphone acoustic devices",
+    "Smart Water Meter Programme (AMI) — Phase 1 ~300,000 smart meters; MySmartWaterMeter portal (hourly/daily data, leak alerts)",
+    "SCADA — existing operational SCADA environment referenced in vendor digital-twin materials (official PUB public detail limited)",
+    "GPS tagging / geofencing of construction machinery near critical pipelines and sewers (since 2023)",
+    "Sewer Analytics and Management System; VOC and microbial electrochemical sensors on used-water network (Sustainability Report 2023)",
+    "Flood monitoring — water-level sensors, CCTVs, myENV / Telegram flood alerts, Quick Response Teams"
+  ],
+  "quality_and_incidents": {
+    "who_drinking_water_tests_pct_meeting_guidelines": 100,
+    "who_years": "CY2022–CY2024 (PUB ASR); drinking-water quality open data 2023–2025 on data.gov.sg",
+    "e_coli_2025": "<1 cfu/100mL (average and range)",
+    "pipe_leaks_repaired_2024": 267,
+    "leaks_per_100km_2024": 4.5,
+    "supply_restoration_avg": "within four hours once leak isolated (PUB press release)"
+  },
+  "climate_resilience": [
+    "Four National Taps (local catchment, imported Johor water to 2061, NEWater, desalination) — weather-resilient NEWater + desalination prioritized",
+    "Source-Pathway-Receptor stormwater approach; ~8,000 km drains; 17 reservoirs; 2/3 land as water catchment",
+    "Flood Resilience Cluster created 1 Aug 2025; flooding hotspots CY2022–24: 26 → 23 → 22",
+    "Year of Climate Adaptation 2026 (MSE); National Adaptation Plan targeted 2027",
+    "Coastal protection Site-Specific Studies; ABC Waters programme"
+  ],
+  "cco_note": "Term 'CCO' (Centro de Controle Operacional) not found in PUB public materials; operational control described via SCADA / Smart Water Grid / ALF / flood monitoring centres.",
+  "sources": [
+    {
+      "url": "https://www.mse.gov.sg/latest-news/written-reply-to-parliamentary-question-on-water-loss-rate-in-the-national-water-distribution-system-in-2025/",
+      "date": "2026-04-08",
+      "note": "CY2025 distribution water loss rate 7.2%"
+    },
+    {
+      "url": "https://www.pub.gov.sg/-/media/PUB/Publications/Report/PDF/PUB_ASR_2025.pdf",
+      "date": "2025",
+      "note": "Annual and Sustainability Report 2024/25 — Distribution Losses CY2022–24, 100% coverage, WHO 100%, LPCD, sales"
+    },
+    {
+      "url": "https://www.pub.gov.sg/Resources/News-Room/PressReleases/2025/02/Keeping-Singapore-potable-water-pipe-network-in-good-order",
+      "date": "2025-02-05",
+      "note": "1.7M accounts, 6,000 km network, 1,500 sensors, 267 leaks in 2024"
+    },
+    {
+      "url": "https://data.gov.sg/datasets/d_9db4902c7a47357441dac7d2806032a5/view",
+      "date": "2026-05-18",
+      "note": "Water Sales Annual Mm3/yr through 2025"
+    },
+    {
+      "url": "https://data.gov.sg/datasets/d_2eceeb792a0fca1caa74304d47b46060/view",
+      "date": "2026-04-20",
+      "note": "NEWater sold annual"
+    },
+    {
+      "url": "https://data.gov.sg/datasets/d_f397c39929978d3047e0e32430c6763b/view",
+      "date": "2026-06-18",
+      "note": "Drinking water quality 2023–2025"
+    },
+    {
+      "url": "https://data.gov.sg/datasets/d_6b6c40b2d2702ae8cf0d3f2e63adfd06/view",
+      "date": "2026-01-16",
+      "note": "100% improved water and sanitation by region"
+    },
+    {
+      "url": "https://www.pub.gov.sg/Public/WaterLoop",
+      "date": "accessed 2026-09-04",
+      "note": "~440 mgd demand; Four National Taps"
+    },
+    {
+      "url": "https://www.pub.gov.sg/Public/KeyInitiatives/Smart-Water-Meter",
+      "date": "accessed 2026-09-04",
+      "note": "~300,000 smart meters Phase 1"
+    },
+    {
+      "url": "https://www.bentley.com/wp-content/uploads/cs-pub-digital-anomaly-ltr-en-lr.pdf",
+      "date": "accessed 2026-09-04",
+      "note": "ALF digital twin case study (vendor)"
+    },
+    {
+      "url": "https://www.population.gov.sg/files/media-centre/publications/Population_in_Brief_2025.pdf",
+      "date": "2025",
+      "note": "Total population 6.11M June 2025"
+    },
+    {
+      "url": "https://sdg6data.org/en/country-or-area/Singapore",
+      "date": "accessed 2026-09-04",
+      "note": "100% safely managed water/sanitation; 100% domestic wastewater treated (2024)"
+    },
+    {
+      "url": "https://www.mse.gov.sg/policies/water/",
+      "date": "2026-05-12",
+      "note": "Water policy, flood monitoring, NEWater, desalination"
+    },
+    {
+      "url": "https://www.mse.gov.sg/yoca/",
+      "date": "2026",
+      "note": "Year of Climate Adaptation 2026"
+    },
+    {
+      "url": "https://data.gov.sg/open-data-licence",
+      "date": "accessed 2026-09-04",
+      "note": "Open Data Licence v1.0"
+    }
+  ]
+}

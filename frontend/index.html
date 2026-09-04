@@ -54,6 +54,7 @@
     .kpi { background: #0a121c; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
     .kpi b { display: block; font-size: 1.15rem; color: var(--cyan); }
     .kpi span { font-size: 0.72rem; color: var(--muted); }
+    .note { font-size: 0.72rem; color: var(--amber); margin: 0 0 10px; }
     footer { padding: 8px 20px; color: var(--muted); font-size: 0.75rem; }
     @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
   </style>
@@ -119,6 +120,17 @@
         <button id="btnHw">Hazen (empírico)</button>
       </div>
       <pre id="hl">—</pre>
+    </section>
+
+    <section class="card" style="grid-column: 1 / -1">
+      <h2>Benchmark · CEDAE × PUB × Paris × Berlim</h2>
+      <p class="note">⚠ métodos de perda NÃO são intercambiáveis (SINISA ≠ DistLoss ≠ P104.3 ≠ ILI) — meta.live=false</p>
+      <table>
+        <thead>
+          <tr><th>Cidade</th><th>Método</th><th>Valor</th><th>Enum</th></tr>
+        </thead>
+        <tbody id="bench"></tbody>
+      </table>
     </section>
   </main>
   <footer>Poseidon · código novo · MIT · 127.0.0.1:8877 · consultivo apenas</footer>
@@ -223,7 +235,21 @@
     document.getElementById("btnDw").onclick = () => hl("darcy");
     document.getElementById("btnHw").onclick = () => hl("hazen");
 
-    loadSystems(); loadPsa(); loadInc();
+
+    async function loadBench() {
+      const body = await j("/api/v1/benchmarks");
+      const tb = document.getElementById("bench");
+      tb.innerHTML = (body.data.rows || []).map(r =>
+        `<tr>
+          <td>${r.city}</td>
+          <td style="color:var(--muted);font-size:0.78rem">${r.loss_method || "—"}</td>
+          <td><b style="color:var(--cyan)">${r.loss_value != null ? r.loss_value : "—"}</b></td>
+          <td><span class="pill alerta">${r.loss_method_enum || "?"}</span></td>
+        </tr>`
+      ).join("");
+    }
+
+    loadSystems(); loadPsa(); loadInc(); loadBench();
     document.getElementById("btnDem").click();
   </script>
 </body>

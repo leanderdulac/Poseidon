@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "research_date": "2026-09-04",
+    "benchmark_target": "CEDAE / Rio de Janeiro",
+    "rule": "No fabricated numbers; every claim has source URL",
+    "veolia_suez_note": "Em Paris intramuros, Veolia/Suez NÃO operam mais água potável nem esgoto desde 01/01/2010 (remunicipalização → Eau de Paris). Continuam como coletores/operadores de água em várias communes da grande couronne conectadas ao SIAAP (ex.: VEOLIA Eau IdF, SUEZ EAU FRANCE listados no indicadores SIAAP 2024 como collecteurs de redevance) e no SEDIF (fora do escopo Paris ville)."
+  },
+  "metrics": [
+    {
+      "operator": "Eau de Paris",
+      "city": "Paris",
+      "year": 2025,
+      "population_served": 3000000,
+      "population_served_note": "3 milhões de usuários diários, dos quais 2,2 milhões de parisienes (RA 2025). RPQS 2024 cita 2.113.705 habitantes desservidos (ano 2024).",
+      "water_loss_pct": 11.0,
+      "water_loss_method": "Complemento do rendimento de rede (P104.3 SISPEA): perdas_pct ≈ 100 − rendement. Rendement 2025 = 89% (RA Eau de Paris 2025). NÃO é o mesmo indicador que perdas SINISA/Trata Brasil. Definição P104.3: volumes consumidos autorizados (+exportados) / volumes introduzidos na rede (produzidos+importados). ILP (P106.3) disponível para 2024: 21,4 m³/km/j (RPQS).",
+      "sewage_treatment_pct": null,
+      "sewage_treatment_note": "Eau de Paris não opera esgoto; coleta=STEA Ville de Paris; tratamento=SIAAP.",
+      "production_l_s_or_m3d": "504759 m3/d (média) ≈ 5842 L/s; 184,2 Mm³/ano (potável 2025)",
+      "digital_assets": {
+        "CCO": "Centre de pilotage intégré / Integrated Control Center (ICC) + Datalab (~1M dados/dia)",
+        "AMI": "Experimentação IA para leitura de medidores (image recognition); AMI massivo: Unknown",
+        "SCADA_GTC": "Revisão GTC (gestion technique centralisée) prevista pós-JO 2024 / produção fim 2024",
+        "digital_twin": "Programa jumeaux numériques / BIM (BIM d'Or 2022); LiDAR ~150 km galerias (Geofit); IGO virtual visit",
+        "leak_detection": "Setorização ~66–67 setores; ~2500–3000 sensores acústicos conectados; meta fugas >2 m³/h; ~14 M€ até 2026 em traçabilidade/fluxos"
+      },
+      "quality": {
+        "microbiological_compliance_pct": 100.0,
+        "physicochemical_compliance_pct": 99.9
+      },
+      "climate": "Modernização usinas/aquedutos e ceinture intérieure (fase 1 concluída fim 2025, até 2028); sede com −60% energia; PFAS: conformidade regulatória + queixa contra produtores; plano sobriété água AESN; rede não potável 1700–1993 km como alternativa climática",
+      "open_data": [
+        "https://opendata.paris.fr/explore/dataset/fontaines-a-boire/",
+        "https://www.data.gouv.fr/datasets/fontaines-a-boire-3",
+        "https://www.services.eaufrance.fr/pro/telechargement",
+        "https://cdn.paris.fr/paris/2025/11/28/rpqs-eau-2024-v4-GLFg.pdf"
+      ],
+      "sources": [
+        "https://www.eaudeparis.fr/sites/default/files/2026-07/EDP-RA-2025_web_compressed%20%282%29.pdf",
+        "https://www.eaudeparis.fr/en/news/activity-report-2025-sustainable-performance-and-public-service-of-the-future",
+        "https://cdn.paris.fr/paris/2025/11/28/rpqs-eau-2024-v4-GLFg.pdf",
+        "https://services.eaufrance.fr/indicateurs/P104.3",
+        "https://www.eaudeparis.fr/en/thematic-files/the-digital-transformation-of-Paris-water",
+        "https://www.eaudeparis.fr/en/news/eau-de-paris-winner-of-the-bim-dor-trophies",
+        "https://www.eaudeparis.fr/distribuer-leau",
+        "https://www.paris.fr/pages/gestion-de-l-eau-2135"
+      ]
+    },
+    {
+      "operator": "Eau de Paris",
+      "city": "Paris",
+      "year": 2024,
+      "population_served": 2113705,
+      "population_served_note": "Habitants desservis RPQS 2024; também 3 milhões de usagers quotidiens.",
+      "water_loss_pct": 9.1,
+      "water_loss_method": "100 − rendement P104.3. Rendement 2024 = 90,9% (RPQS Ville de Paris / SISPEA). ILP P106.3 = 21,4 m³/km/j; ILVNC P105.3 = 28,7 m³/km/j. Volumes 2024 (Mm³): produits+importés 174,4; consommés autorisés 158,5.",
+      "sewage_treatment_pct": null,
+      "sewage_treatment_note": "N/A — água potável apenas.",
+      "production_l_s_or_m3d": "173,788 Mm³/ano ≈ 476132 m3/d ≈ 5511 L/s (derivado de produção anual RPQS); RA 2024 cita média ~476000 m3/d",
+      "digital_assets": {
+        "CCO": "Centre de pilotage intégré",
+        "sectorization": "67 setores (RPQS) / 66 (comunicação digital)",
+        "acoustic_sensors": "Deploy desde 2021; cobertura diária da rede",
+        "digital_twin": "BIM / jumeau numérique em curso (PPI 2021-2026)"
+      },
+      "quality": {
+        "microbiological_compliance_pct": 100.0,
+        "physicochemical_compliance_pct": 99.9,
+        "source": "RPQS 2024 P101.1 / P102.1"
+      },
+      "climate": "RPQS/RA: resiliência, proteção de recursos agrícolas >20k ha (citado no RA 2025 para continuidade); rede não potável para usos urbanos",
+      "sources": [
+        "https://cdn.paris.fr/paris/2025/11/28/rpqs-eau-2024-v4-GLFg.pdf",
+        "https://www.eaudeparis.fr/sites/default/files/2025-07/EDP_RA2024_WEB.pdf",
+        "https://services.eaufrance.fr/indicateurs/P104.3"
+      ]
+    },
+    {
+      "operator": "SIAAP",
+      "city": "Paris metro / Île-de-France (Paris + petite couronne + communes associées)",
+      "year": 2024,
+      "population_served": 9250000,
+      "population_served_note": "9,25 milhões de usagers franciliens (RADD SIAAP 2024).",
+      "water_loss_pct": null,
+      "water_loss_method": "N/A — SIAAP é transporte/tratamento de esgoto, não distribuição de água potável.",
+      "sewage_treatment_pct": null,
+      "sewage_treatment_note": "Comparável ao % SINISA BR: Unknown (não publicado como ratio volume tratado/água consumida). Em 2024 o sistema de coleta SIAAP foi julgado conforme às prescrições. Indicador P254.3 (conformidade de performance das estações, todas usinas) = 97,3%. Volumes recebidos nas 6 usinas: 2.655.371 m³/j; 971,9 Mm³/ano. Rejeitos unitários via déversoirs em tempo de chuva existem (Paris: 39 déversoirs d'orage no STEA).",
+      "production_l_s_or_m3d": "2.655.371 m3/d recebidos nas usinas ≈ 30734 L/s; comunicação institucional também usa ~2,5 milhões m³/d / 2,5 bilhões de litros/dia",
+      "digital_assets": {
+        "CCO": "MAGES — Modèle d’Aide à la Gestion des Effluents du SIAAP (RTC desde ~2008); poste de contrôle 24h",
+        "SCADA": "Integra dados dos atores de assainissement + prévisions Météo-France sobre ~480–481 km de rede SIAAP",
+        "digital_twin": "Estratégia de jumeau numérique (BIM/SIG/GMAO; reality capture Cintoo); AO 2026 modelos numéricos/simulateurs",
+        "AMI": "N/A (não é distribuidor de água potável)"
+      },
+      "quality": {
+        "P254_3_treatment_performance_conformity_pct": 97.3,
+        "DERU_ablation_2024_pct": {
+          "DCO": 90.6,
+          "Ptot": 83.2,
+          "NTK": 89.6,
+          "NGL": 71.9
+        },
+        "collection_conformity_2024": "conforme (déclaré)"
+      },
+      "climate": "Plan Baignade / JO 2024; 2ª temporada baignade Seine-Marne 2026 (>200k visitantes, 12 sites — home SIAAP); armazenamento >990.000 m³ (8 bassins + 6 tunnels-réservoirs); adaptação climática citada no RADD",
+      "open_data": [
+        "https://www.siaap.fr/equipements/tableau-de-bord/bilan-des-usines-depuration/",
+        "https://www.siaap.fr/presse-publications/publications/editions/institutionnelles/",
+        "https://www.services.eaufrance.fr/pro/telechargement"
+      ],
+      "sources": [
+        "https://www.siaap.fr/fileadmin/user_upload/Siaap/6_Presse_et_publications/Publication/Editions/institutionnelles/RADD_2024_SIAAP.pdf",
+        "https://www.siaap.fr/fileadmin/user_upload/Siaap/6_Presse_et_publications/Publication/Editions/institutionnelles/SIAAP_Indicateurs_RPQS_RA_12_2024.pdf",
+        "https://www.siaap.fr/equipements/le-reseau/mages/",
+        "https://www.siaap.fr/",
+        "https://cdn.paris.fr/paris/2025/11/28/rpqs-eau-2024-v4-GLFg.pdf"
+      ]
+    },
+    {
+      "operator": "Ville de Paris — STEA (Service technique de l'eau et de l'assainissement)",
+      "city": "Paris",
+      "year": 2024,
+      "population_served": 2113705,
+      "population_served_note": "Mesmo perímetro de desserte potável do RPQS para a cidade; coleta intramuros até emissários SIAAP.",
+      "water_loss_pct": null,
+      "water_loss_method": "N/A",
+      "sewage_treatment_pct": null,
+      "sewage_treatment_note": "STEA coleta/transporta; tratamento é SIAAP. Rede ~2.500 km de égouts visitáveis; 319,8 Mm³ coletados em Paris em 2024 (inclui pluviais, aportações externas e eau non potable). Poste central de contrôle-commande ligado a 140 estações locais.",
+      "production_l_s_or_m3d": "319,8 Mm³ coletados/ano em Paris (2024) — não é produção potável",
+      "digital_assets": {
+        "CCO": "Poste central de contrôle-commande (égouts) + 140 estações de gestão local",
+        "SCADA": "Sim — monitoramento em tempo real de bombas/válvulas/déversoirs",
+        "digital_twin": "Unknown (nível STEA)",
+        "AMI": "N/A"
+      },
+      "climate": "39 déversoirs d'orage; gestão de cheias/pluviometria; Plan Baignade em articulação com SIAAP",
+      "sources": [
+        "https://cdn.paris.fr/paris/2025/11/28/rpqs-eau-2024-v4-GLFg.pdf",
+        "https://www.paris.fr/pages/gestion-de-l-eau-2135",
+        "https://www.paris.fr/pages/les-egouts-a-paris-2367"
+      ]
+    }
+  ]
+}

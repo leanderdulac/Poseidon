@@ -157,12 +157,30 @@ A UI é um CCO estático em português, servido pela própria API. Banner: **dad
 
 Bind: **127.0.0.1**. Demo **sem JWT**.
 
+
+## Benchmark PUB / Paris / Berlim
+
+Comparativo de referência (fixtures, `meta.live=false`) entre CEDAE/RJ, PUB Singapura,
+Eau de Paris (+ SIAAP) e Berliner Wasserbetriebe.
+
+- Brief: [`docs/benchmarks/09-comparativo-cedae-pub-paris-berlim.md`](docs/benchmarks/09-comparativo-cedae-pub-paris-berlim.md)
+- Matriz: [`data/comparison/matrix.json`](data/comparison/matrix.json)
+- Métricas por cidade: `data/{cedae,singapore,paris,berlin}/metrics.json`
+- API: `GET /api/v1/benchmarks` · `GET /api/v1/benchmarks/actions`
+
+**Aviso — métodos de perda não são intercambiáveis.** SINISA % (RJ), Distribution Losses %
+(PUB), SISPEA P104.3 (Paris) e ILI (Berlim) vivem em campos distintos. Comparar direção e
+ordem de grandeza; nunca plotar 0,87 % Berlim contra 50 % RJ na mesma barra sem converter
+metodologia. Capacidade / vazão em L/s *é* comparável (Guandu 45 000 L/s vs peers).
+
 ## Layout
 
 ```
 src/poseidon/    hidráulica, qualidade, clima, domínio, API
 tests/           identidades, Joukowsky, ADE, PSA, outage, clamp
 frontend/        CCO escuro em português (Leaflet)
+docs/benchmarks/ brief comparativo PUB/Paris/Berlim
+data/            matriz + métricas por cidade (fixtures)
 ```
 
 ## Licença

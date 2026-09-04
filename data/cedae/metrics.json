@@ -1,0 +1,26 @@
+{
+  "operator": "CEDAE (Companhia Estadual de Águas e Esgotos do Rio de Janeiro)",
+  "city": "Rio de Janeiro metro (wholesale) + ~15 interior municipalities (full cycle)",
+  "year": 2026,
+  "population_served": null,
+  "population_served_note": "Guandu alone >9M; 10 metro systems ~12M. Exact CEDAE residual retail pop unknown in one consolidated KPI. Post-2021: wholesale to Águas do Rio / Iguá / Rio+.",
+  "water_loss_pct": 50.53,
+  "water_loss_method": "SINISA 2024 perdas na distribuição for Estado RJ (Trata Brasil / O Globo 01/09/2026). Rio município 38.92% / 852.72 L/lig·day. NOT IWA ILI; NOT SISPEA P104.3. CEDAE residual NRW as wholesaler: unknown / not found.",
+  "sewage_treatment_pct": null,
+  "sewage_treatment_note": "Retail sewage is concessionaires'. Baixada collapse: São João de Meriti 0% treatment; Belford Roxo collection 7.62% (SINISA 2024). Capital treatment of collected ~85.98%.",
+  "production_l_s_or_m3d": "Guandu 45,000 L/s; Imunana-Laranjal 7,000 L/s; 10 RM systems >57,000 L/s",
+  "digital_assets": [
+    "CMA Botafogo (opened 2026-06-09): 36 cameras, 14 points, ~10 WQ params — catchment watch, not full-cycle CCO",
+    "CCO Guandu / Imunana-Laranjal plant rooms",
+    "IRM CCO for wholesale delivery to concessionaires (governance issues 2026)",
+    "No public hydraulic digital twin of trunk mains",
+    "AMI residential: not CEDAE (concessionaires)"
+  ],
+  "sources": [
+    "https://www.cedae.com.br/oquemudou",
+    "https://www.cedae.com.br/novoguandu",
+    "https://www.cedae.com.br/Noticias/detalhe/cedae-fortalece-a-seguranca-hidrica-com-novo-centro-de-monitoramento-ambiental/id/907",
+    "workspace briefs 01-cedae-operacao.md / 02-benchmarks.md"
+  ],
+  "retrieved_at": "2026-09-04"
+}

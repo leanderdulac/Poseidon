@@ -18,6 +18,7 @@ from poseidon import __version__
 from poseidon.climate import clamp_horizonte
 from poseidon.domain import INCIDENTES_FIXTURE, SISTEMAS, envelope
 from poseidon.hydraulics import headloss, joukowsky_delta_p_pa
+from poseidon.benchmarks import actions_envelope, benchmarks_envelope
 from poseidon.models import cenario_demanda, cenario_geosmina, cenario_guandu_50, psa_atual
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
@@ -122,6 +123,19 @@ def hydraulics_hammer(body: HammerBody) -> dict:
 def hydraulics_headloss(body: HeadlossBody) -> dict:
     res = headloss(body.L, body.D, body.Q, method=body.method, c=body.c)
     return envelope(res, recurso="headloss")
+
+
+
+@app.get("/api/v1/benchmarks")
+def benchmarks() -> dict:
+    """Matriz CEDAE × PUB × Paris × Berlim (fixtures; meta.live=false)."""
+    return benchmarks_envelope()
+
+
+@app.get("/api/v1/benchmarks/actions")
+def benchmarks_actions() -> dict:
+    """Acções Poseidon derivadas da matriz de benchmark."""
+    return actions_envelope()
 
 
 if FRONTEND_DIR.is_dir():
