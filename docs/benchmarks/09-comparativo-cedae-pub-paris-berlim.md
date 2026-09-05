@@ -51,3 +51,9 @@
 - `08-benchmark-berlim.md` + `data/berlin/`
 - `01-cedae-operacao.md`, `02-benchmarks.md`
 - `data/comparison/matrix.json`
+
+## 6. Docs derivados (2026-09-05)
+
+- `10-iaguas-supera-crosswalk.md` — cruzamento IAguas/SUPERA × peers
+- `11-piloto-alf-guandu.md` — piloto ALF-like Guandu→entrega
+- `12-fusao-iaguas-cma-psa.md` — fusão IAguas/CMA no PSA
