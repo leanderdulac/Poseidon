@@ -78,6 +78,7 @@
       <div class="row">
         <button id="btnGeo">Simular pulso geosmina</button>
         <button id="btnGuandu">Cenário Guandu 50 %</button>
+        <button id="btnAlf">Simular anomalia ALF</button>
       </div>
       <pre id="out">à espera de uma acção…</pre>
     </section>
@@ -202,6 +203,12 @@
       document.getElementById("psa").innerHTML =
         `entrega ${pill(body.data.psa_entrega)} · captação ${pill(body.data.psa_captação)} · t viagem ${(body.data.t_viagem_h).toFixed(2)} h`;
     };
+    
+    document.getElementById("btnAlf").onclick = async () => {
+      const body = await j("/api/v1/alf/demo/anomaly", { method: "POST" });
+      document.getElementById("out").textContent = pretty(body);
+    };
+
     document.getElementById("btnGuandu").onclick = async () => {
       const body = await j("/api/v1/demo/guandu-50", { method: "POST" });
       document.getElementById("out").textContent = pretty(body);

@@ -48,7 +48,7 @@ Detectar e localizar anomalias de vazão/pressão na **adução/macromedição G
 
 1. Inventário de tags PI nos macromedidores Guandu + pontos de entrega  
 2. Escolher 1–2 adutoras com densidade de medição  
-3. Protótipo DDP+PBS no Poseidon (fixtures primeiro)
+3. ~~Protótipo DDP+PBS no Poseidon (fixtures primeiro)~~ → **código:** `src/poseidon/alf.py` + fixtures `data/alf/` + `GET /api/v1/alf/baseline` · `POST /api/v1/alf/demo/anomaly` (advisory; `meta.live=false`; sem SCADA write)
 
 ## 8. Referências
 

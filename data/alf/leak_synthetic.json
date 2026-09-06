@@ -1,0 +1,391 @@
+{
+  "data": {
+    "id": "alf-leak-synthetic",
+    "label": "demo",
+    "description": "Cenário sintético de ruptura/vazamento no tronco (horas 10–13)",
+    "n_hours": 24,
+    "series": [
+      {
+        "hour": 0,
+        "timestamp": "2026-09-05T00:00:00-03:00",
+        "q_guandu_m3_s": 43.65,
+        "h_guandu_m": 83.808725,
+        "h_delivery_m": 69.278673,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.682,
+          "igua": 7.4205,
+          "rio_mais": 6.5475
+        },
+        "q_delivery_total_m3_s": 43.65,
+        "leak_label": false
+      },
+      {
+        "hour": 1,
+        "timestamp": "2026-09-05T01:00:00-03:00",
+        "q_guandu_m3_s": 43.760998,
+        "h_guandu_m": 83.790853,
+        "h_delivery_m": 69.187591,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.757479,
+          "igua": 7.43937,
+          "rio_mais": 6.56415
+        },
+        "q_delivery_total_m3_s": 43.760999,
+        "leak_label": false
+      },
+      {
+        "hour": 2,
+        "timestamp": "2026-09-05T02:00:00-03:00",
+        "q_guandu_m3_s": 43.814065,
+        "h_guandu_m": 83.823928,
+        "h_delivery_m": 69.185601,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.793564,
+          "igua": 7.448391,
+          "rio_mais": 6.57211
+        },
+        "q_delivery_total_m3_s": 43.814065,
+        "leak_label": false
+      },
+      {
+        "hour": 3,
+        "timestamp": "2026-09-05T03:00:00-03:00",
+        "q_guandu_m3_s": 43.984239,
+        "h_guandu_m": 84.037389,
+        "h_delivery_m": 69.286331,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.909283,
+          "igua": 7.477321,
+          "rio_mais": 6.597636
+        },
+        "q_delivery_total_m3_s": 43.98424,
+        "leak_label": false
+      },
+      {
+        "hour": 4,
+        "timestamp": "2026-09-05T04:00:00-03:00",
+        "q_guandu_m3_s": 44.357852,
+        "h_guandu_m": 84.402025,
+        "h_delivery_m": 69.401955,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.16334,
+          "igua": 7.540835,
+          "rio_mais": 6.653678
+        },
+        "q_delivery_total_m3_s": 44.357853,
+        "leak_label": false
+      },
+      {
+        "hour": 5,
+        "timestamp": "2026-09-05T05:00:00-03:00",
+        "q_guandu_m3_s": 44.704074,
+        "h_guandu_m": 84.752693,
+        "h_delivery_m": 69.520011,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.39877,
+          "igua": 7.599693,
+          "rio_mais": 6.705611
+        },
+        "q_delivery_total_m3_s": 44.704074,
+        "leak_label": false
+      },
+      {
+        "hour": 6,
+        "timestamp": "2026-09-05T06:00:00-03:00",
+        "q_guandu_m3_s": 44.952758,
+        "h_guandu_m": 85.004586,
+        "h_delivery_m": 69.60372,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.567876,
+          "igua": 7.641969,
+          "rio_mais": 6.742914
+        },
+        "q_delivery_total_m3_s": 44.952759,
+        "leak_label": false
+      },
+      {
+        "hour": 7,
+        "timestamp": "2026-09-05T07:00:00-03:00",
+        "q_guandu_m3_s": 45.307357,
+        "h_guandu_m": 85.249125,
+        "h_delivery_m": 69.606853,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.809003,
+          "igua": 7.702251,
+          "rio_mais": 6.796104
+        },
+        "q_delivery_total_m3_s": 45.307358,
+        "leak_label": false
+      },
+      {
+        "hour": 8,
+        "timestamp": "2026-09-05T08:00:00-03:00",
+        "q_guandu_m3_s": 45.733863,
+        "h_guandu_m": 85.589459,
+        "h_delivery_m": 69.654345,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.099027,
+          "igua": 7.774757,
+          "rio_mais": 6.860079
+        },
+        "q_delivery_total_m3_s": 45.733863,
+        "leak_label": false
+      },
+      {
+        "hour": 9,
+        "timestamp": "2026-09-05T09:00:00-03:00",
+        "q_guandu_m3_s": 45.981942,
+        "h_guandu_m": 85.957191,
+        "h_delivery_m": 69.850498,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.267721,
+          "igua": 7.81693,
+          "rio_mais": 6.897291
+        },
+        "q_delivery_total_m3_s": 45.981942,
+        "leak_label": false
+      },
+      {
+        "hour": 10,
+        "timestamp": "2026-09-05T10:00:00-03:00",
+        "q_guandu_m3_s": 49.790758,
+        "h_guandu_m": 74.182317,
+        "h_delivery_m": 47.326218,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.826253,
+          "igua": 7.956563,
+          "rio_mais": 7.020497
+        },
+        "q_delivery_total_m3_s": 46.803313,
+        "leak_label": true
+      },
+      {
+        "hour": 11,
+        "timestamp": "2026-09-05T11:00:00-03:00",
+        "q_guandu_m3_s": 49.997143,
+        "h_guandu_m": 72.217576,
+        "h_delivery_m": 43.706324,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.618193,
+          "igua": 7.904548,
+          "rio_mais": 6.974601
+        },
+        "q_delivery_total_m3_s": 46.497342,
+        "leak_label": true
+      },
+      {
+        "hour": 12,
+        "timestamp": "2026-09-05T12:00:00-03:00",
+        "q_guandu_m3_s": 50.133071,
+        "h_guandu_m": 70.189227,
+        "h_delivery_m": 40.075443,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.363249,
+          "igua": 7.840812,
+          "rio_mais": 6.918364
+        },
+        "q_delivery_total_m3_s": 46.122425,
+        "leak_label": true
+      },
+      {
+        "hour": 13,
+        "timestamp": "2026-09-05T13:00:00-03:00",
+        "q_guandu_m3_s": 50.000171,
+        "h_guandu_m": 68.19967,
+        "h_delivery_m": 36.686137,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.940106,
+          "igua": 7.735026,
+          "rio_mais": 6.825023
+        },
+        "q_delivery_total_m3_s": 45.500155,
+        "leak_label": true
+      },
+      {
+        "hour": 14,
+        "timestamp": "2026-09-05T14:00:00-03:00",
+        "q_guandu_m3_s": 46.101834,
+        "h_guandu_m": 86.172752,
+        "h_delivery_m": 69.98281,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.349247,
+          "igua": 7.837312,
+          "rio_mais": 6.915275
+        },
+        "q_delivery_total_m3_s": 46.101834,
+        "leak_label": false
+      },
+      {
+        "hour": 15,
+        "timestamp": "2026-09-05T15:00:00-03:00",
+        "q_guandu_m3_s": 45.979345,
+        "h_guandu_m": 85.969923,
+        "h_delivery_m": 69.865031,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.265954,
+          "igua": 7.816489,
+          "rio_mais": 6.896902
+        },
+        "q_delivery_total_m3_s": 45.979345,
+        "leak_label": false
+      },
+      {
+        "hour": 16,
+        "timestamp": "2026-09-05T16:00:00-03:00",
+        "q_guandu_m3_s": 45.735241,
+        "h_guandu_m": 85.605763,
+        "h_delivery_m": 69.669699,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 31.099964,
+          "igua": 7.774991,
+          "rio_mais": 6.860286
+        },
+        "q_delivery_total_m3_s": 45.735241,
+        "leak_label": false
+      },
+      {
+        "hour": 17,
+        "timestamp": "2026-09-05T17:00:00-03:00",
+        "q_guandu_m3_s": 45.309568,
+        "h_guandu_m": 85.245169,
+        "h_delivery_m": 69.601386,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.810506,
+          "igua": 7.702627,
+          "rio_mais": 6.796435
+        },
+        "q_delivery_total_m3_s": 45.309568,
+        "leak_label": false
+      },
+      {
+        "hour": 18,
+        "timestamp": "2026-09-05T18:00:00-03:00",
+        "q_guandu_m3_s": 44.950836,
+        "h_guandu_m": 84.986295,
+        "h_delivery_m": 69.586732,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.566568,
+          "igua": 7.641642,
+          "rio_mais": 6.742625
+        },
+        "q_delivery_total_m3_s": 44.950835,
+        "leak_label": false
+      },
+      {
+        "hour": 19,
+        "timestamp": "2026-09-05T19:00:00-03:00",
+        "q_guandu_m3_s": 44.702389,
+        "h_guandu_m": 84.746871,
+        "h_delivery_m": 69.515325,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.397624,
+          "igua": 7.599406,
+          "rio_mais": 6.705358
+        },
+        "q_delivery_total_m3_s": 44.702388,
+        "leak_label": false
+      },
+      {
+        "hour": 20,
+        "timestamp": "2026-09-05T20:00:00-03:00",
+        "q_guandu_m3_s": 44.360177,
+        "h_guandu_m": 84.417076,
+        "h_delivery_m": 69.415449,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 30.164921,
+          "igua": 7.54123,
+          "rio_mais": 6.654027
+        },
+        "q_delivery_total_m3_s": 44.360178,
+        "leak_label": false
+      },
+      {
+        "hour": 21,
+        "timestamp": "2026-09-05T21:00:00-03:00",
+        "q_guandu_m3_s": 43.985306,
+        "h_guandu_m": 84.051199,
+        "h_delivery_m": 69.299432,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.910008,
+          "igua": 7.477502,
+          "rio_mais": 6.597796
+        },
+        "q_delivery_total_m3_s": 43.985306,
+        "leak_label": false
+      },
+      {
+        "hour": 22,
+        "timestamp": "2026-09-05T22:00:00-03:00",
+        "q_guandu_m3_s": 43.811492,
+        "h_guandu_m": 83.816332,
+        "h_delivery_m": 69.179705,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.791815,
+          "igua": 7.447954,
+          "rio_mais": 6.571724
+        },
+        "q_delivery_total_m3_s": 43.811493,
+        "leak_label": false
+      },
+      {
+        "hour": 23,
+        "timestamp": "2026-09-05T23:00:00-03:00",
+        "q_guandu_m3_s": 43.7606,
+        "h_guandu_m": 83.773039,
+        "h_delivery_m": 69.170039,
+        "q_delivery_m3_s": {
+          "aguas_do_rio": 29.757208,
+          "igua": 7.439302,
+          "rio_mais": 6.56409
+        },
+        "q_delivery_total_m3_s": 43.7606,
+        "leak_label": false
+      }
+    ],
+    "trunk": {
+      "reaches": [
+        {
+          "id": "reach-guandu-macro",
+          "from": "eta-guandu",
+          "to": "macro-tronco",
+          "length_m": 12000.0,
+          "diameter_m": 5.0,
+          "eps_m": 0.0003
+        },
+        {
+          "id": "reach-macro-entrega",
+          "from": "macro-tronco",
+          "to": "interface-concessionarias",
+          "length_m": 8000.0,
+          "diameter_m": 4.5,
+          "eps_m": 0.0003
+        }
+      ]
+    },
+    "scenario": {
+      "type": "leak_break",
+      "hours": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "synthetic": true
+    }
+  },
+  "meta": {
+    "live": false,
+    "fonte": "fixture",
+    "rotulo": "dados de demonstração ALF Guandu→entrega",
+    "aviso": "Não é telemetria CEDAE ao vivo. Sem escrita em SCADA. Label demo.",
+    "guandu_context_l_s": 45000,
+    "guandu_context_m3_s": 45.0,
+    "shares": {
+      "aguas_do_rio": 0.68,
+      "igua": 0.17,
+      "rio_mais": 0.15
+    },
+    "scada_write": false,
+    "cenario": "leak_synthetic"
+  }
+}

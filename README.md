@@ -173,14 +173,33 @@ Eau de Paris (+ SIAAP) e Berliner Wasserbetriebe.
 ordem de grandeza; nunca plotar 0,87 % Berlim contra 50 % RJ na mesma barra sem converter
 metodologia. Capacidade / vazão em L/s *é* comparável (Guandu 45 000 L/s vs peers).
 
+
+## ALF-like Guandu → entrega (piloto)
+
+Protótipo **DDP + PBS** no espírito do PUB Anomaly Leak Finder, só na adução/macromedição
+(Guandu ~45 000 L/s → Águas do Rio / Iguá / Rio+ com shares fixture 0.68/0.17/0.15).
+
+- Código: [`src/poseidon/alf.py`](src/poseidon/alf.py)
+- Fixtures: [`data/alf/`](data/alf/) (`baseline_24h.json`, `leak_synthetic.json`) — label demo
+- Brief: [`docs/benchmarks/11-piloto-alf-guandu.md`](docs/benchmarks/11-piloto-alf-guandu.md)
+- API: `GET /api/v1/alf/baseline` · `POST /api/v1/alf/demo/anomaly`
+- Consultivo apenas (`meta.live=false`, `scada_write=false`). Sem telemetria CEDAE inventada.
+
+Demo rápido:
+
+```bash
+curl -s http://127.0.0.1:8877/api/v1/alf/baseline | python3 -m json.tool | head
+curl -s -X POST http://127.0.0.1:8877/api/v1/alf/demo/anomaly | python3 -m json.tool | head
+```
+
 ## Layout
 
 ```
-src/poseidon/    hidráulica, qualidade, clima, domínio, API
+src/poseidon/    hidráulica, qualidade, clima, domínio, ALF (DDP+PBS), API
 tests/           identidades, Joukowsky, ADE, PSA, outage, clamp
 frontend/        CCO escuro em português (Leaflet)
 docs/benchmarks/ brief comparativo PUB/Paris/Berlim
-data/            matriz + métricas por cidade (fixtures)
+data/            matriz + métricas por cidade + alf/ (fixtures)
 ```
 
 ## Licença

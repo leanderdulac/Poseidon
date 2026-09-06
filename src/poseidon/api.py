@@ -20,6 +20,7 @@ from poseidon.domain import INCIDENTES_FIXTURE, SISTEMAS, envelope
 from poseidon.hydraulics import headloss, joukowsky_delta_p_pa
 from poseidon.benchmarks import actions_envelope, benchmarks_envelope
 from poseidon.models import cenario_demanda, cenario_geosmina, cenario_guandu_50, psa_atual
+from poseidon.alf import baseline_envelope, demo_anomaly_envelope
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 
@@ -136,6 +137,18 @@ def benchmarks() -> dict:
 def benchmarks_actions() -> dict:
     """Acções Poseidon derivadas da matriz de benchmark."""
     return actions_envelope()
+
+
+@app.get("/api/v1/alf/baseline")
+def alf_baseline() -> dict:
+    """Baseline 24 h Guandu→entrega + DDP/PBS (fixture; meta.live=false)."""
+    return baseline_envelope()
+
+
+@app.post("/api/v1/alf/demo/anomaly")
+def alf_demo_anomaly() -> dict:
+    """Demo ruptura sintética — DDP+PBS advisory (sem SCADA write)."""
+    return demo_anomaly_envelope()
 
 
 if FRONTEND_DIR.is_dir():
