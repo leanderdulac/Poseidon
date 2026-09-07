@@ -31,7 +31,7 @@ Ver:
 | **F0** | Tool gateway allowlist + RAG + auditoria |
 | **F1** | Agentes gestores: situação, PSA, briefing |
 | **F2** | Atendimento: triagem + status (+ OS em 2b) |
-| **F3** | Anomalia Guandu advisory (DDP+PBS; ver `benchmarks/11`) |
+| **F3** | Anomalia Guandu advisory (DDP+PBS; ver `benchmarks/11`) — **fixtures já no main:** `src/poseidon/alf.py`, `GET/POST /api/v1/alf/*` |
 | **F4** | Federação read-only COI Águas do Rio / Iguá / Rio+ |
 
 ## Relação com benchmarks
