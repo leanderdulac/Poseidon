@@ -33,9 +33,9 @@ def test_envelope_live_false():
 
 def test_outage_split_068_017_015():
     aloc = alocar_guandu_50(22_500)
-    assert SHARE_AGUAS_DO_RIO == pytest.approx(0.68)
-    assert SHARE_IGUA == pytest.approx(0.17)
-    assert SHARE_RIO_MAIS == pytest.approx(0.15)
+    assert pytest.approx(0.68) == SHARE_AGUAS_DO_RIO
+    assert pytest.approx(0.17) == SHARE_IGUA
+    assert pytest.approx(0.15) == SHARE_RIO_MAIS
     s = aloc["shares"]
     assert s["aguas_do_rio"] + s["igua"] + s["rio_mais"] == pytest.approx(1.0)
     a = aloc["alocacao_l_s"]

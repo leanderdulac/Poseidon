@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import Any
 
-import numpy as np
-
 from poseidon.climate import clamp_horizonte, prever_demanda, regime_qualidade
 from poseidon.domain import alocar_guandu_50, envelope
 from poseidon.quality import (

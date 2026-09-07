@@ -23,6 +23,7 @@ Ver:
 
 - `01-f0-f1-gateway-gestores.md`
 - `02-f2-atendimento.md`
+- `03-qualidade-deterministica.md` — portões objetivos (cobertura/lint/tipos/complexidade/bandit/mutação); F0 não afirma qualidade sem gates verdes
 
 ## Roadmap
 

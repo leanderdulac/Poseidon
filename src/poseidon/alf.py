@@ -94,6 +94,41 @@ def _ref_stats(
     }
 
 
+def _ddp_rolling_flags(
+    q: np.ndarray,
+    h: np.ndarray,
+    hours: np.ndarray,
+    *,
+    window: int,
+    z_threshold: float,
+) -> tuple[np.ndarray, list[dict[str, Any]]]:
+    """Rolling z-score auxiliar (piso de σ). Retorna flags + detalhes."""
+    n = len(q)
+    roll_flags: np.ndarray = np.zeros(n, dtype=bool)
+    roll_details: list[dict[str, Any]] = []
+    for i in range(n):
+        start = max(0, i - window)
+        hist_q = q[start:i] if i > start else q[0:1]
+        hist_h = h[start:i] if i > start else h[0:1]
+        mq = float(np.mean(hist_q))
+        sq = max(float(np.std(hist_q)), DDP_SIGMA_FLOOR_Q)
+        mh = float(np.mean(hist_h))
+        sh = max(float(np.std(hist_h)), DDP_SIGMA_FLOOR_H)
+        rzq = (float(q[i]) - mq) / sq
+        rzh = (float(h[i]) - mh) / sh
+        rflag = bool(i >= window and (abs(rzq) >= z_threshold or abs(rzh) >= z_threshold))
+        roll_flags[i] = rflag
+        roll_details.append(
+            {
+                "hour": int(hours[i]),
+                "z_q_roll": round(float(rzq), 4),
+                "z_h_roll": round(float(rzh), 4),
+                "flag_roll": rflag,
+            }
+        )
+    return roll_flags, roll_details
+
+
 def ddp_analyze(
     series: list[dict[str, Any]],
     *,
@@ -112,45 +147,22 @@ def ddp_analyze(
     stats = _ref_stats(ref_series, series)
     z_q = (q - stats["q_mean"]) / stats["q_std"]
     z_h = (h - stats["h_mean"]) / stats["h_std"]
-
-    # rolling (informativo + flag auxiliar com piso)
-    roll_flags = np.zeros(n, dtype=bool)
-    roll_details: list[dict[str, Any]] = []
-    for i in range(n):
-        start = max(0, i - window)
-        hist_q = q[start:i] if i > start else q[0:1]
-        hist_h = h[start:i] if i > start else h[0:1]
-        mq, sq = float(np.mean(hist_q)), max(float(np.std(hist_q)), DDP_SIGMA_FLOOR_Q)
-        mh, sh = float(np.mean(hist_h)), max(float(np.std(hist_h)), DDP_SIGMA_FLOOR_H)
-        rzq = (float(q[i]) - mq) / sq
-        rzh = (float(h[i]) - mh) / sh
-        mature = i >= window
-        rflag = bool(mature and (abs(rzq) >= z_threshold or abs(rzh) >= z_threshold))
-        roll_flags[i] = rflag
-        roll_details.append(
-            {
-                "hour": int(arr["hours"][i]),
-                "z_q_roll": round(float(rzq), 4),
-                "z_h_roll": round(float(rzh), 4),
-                "flag_roll": rflag,
-            }
-        )
-
+    roll_flags, roll_details = _ddp_rolling_flags(
+        q, h, arr["hours"], window=window, z_threshold=z_threshold
+    )
     ref_flags = (np.abs(z_q) >= z_threshold) | (np.abs(z_h) >= z_threshold)
     flags = ref_flags | roll_flags
-    details: list[dict[str, Any]] = []
-    for i in range(n):
-        details.append(
-            {
-                "hour": int(arr["hours"][i]),
-                "z_q": round(float(z_q[i]), 4),
-                "z_h": round(float(z_h[i]), 4),
-                "z_q_roll": roll_details[i]["z_q_roll"],
-                "z_h_roll": roll_details[i]["z_h_roll"],
-                "flag": bool(flags[i]),
-            }
-        )
-
+    details = [
+        {
+            "hour": int(arr["hours"][i]),
+            "z_q": round(float(z_q[i]), 4),
+            "z_h": round(float(z_h[i]), 4),
+            "z_q_roll": roll_details[i]["z_q_roll"],
+            "z_h_roll": roll_details[i]["z_h_roll"],
+            "flag": bool(flags[i]),
+        }
+        for i in range(n)
+    ]
     return {
         "method": "DDP",
         "window": window,
@@ -200,6 +212,60 @@ def _simulate_trunk_head(
     }
 
 
+def _pbs_point(
+    p: dict[str, Any],
+    reaches: list[dict[str, Any]],
+    *,
+    head_residual_m: float,
+    continuity_residual_m3_s: float,
+) -> dict[str, Any]:
+    """Um ponto PBS: resíduos de continuidade e cabeça + trecho aproximado."""
+    q_up = float(p["q_guandu_m3_s"])
+    h_up = float(p["h_guandu_m"])
+    q_del = float(p["q_delivery_total_m3_s"])
+    h_del_obs = float(p.get("h_delivery_m", h_up))
+    sim = _simulate_trunk_head(q_up, h_up, reaches)
+    cres = continuity_residual([q_up], [q_del], dV_dt_m3_s=0.0)
+    h_res = float(h_del_obs - sim["h_delivery_sim_m"])
+    headloss_total = sum(x["delta_h_m"] for x in sim["losses"])
+    cont_flag = abs(cres) >= continuity_residual_m3_s
+    head_flag = abs(h_res) >= head_residual_m
+    flagged = bool(cont_flag or head_flag)
+    if cont_flag:
+        reach_id = reaches[-1]["id"]
+    elif head_flag and sim["losses"]:
+        reach_id = max(sim["losses"], key=lambda x: abs(x["delta_h_m"]))["reach_id"]
+    else:
+        reach_id = None
+    return {
+        "hour": int(p["hour"]),
+        "q_guandu_m3_s": round(q_up, 6),
+        "q_delivery_total_m3_s": round(q_del, 6),
+        "h_delivery_obs_m": round(h_del_obs, 4),
+        "h_delivery_sim_m": sim["h_delivery_sim_m"],
+        "continuity_residual_m3_s": round(float(cres), 6),
+        "head_residual_m": round(h_res, 4),
+        "headloss_total_m": round(float(headloss_total), 4),
+        "flag": flagged,
+        "reach_id": reach_id,
+    }
+
+
+
+def _pbs_approx_reach(
+    points: list[dict[str, Any]], reaches: list[dict[str, Any]]
+) -> str:
+    """Trecho mais votado entre pontos flagados; fallback = último reach."""
+    reach_votes: dict[str, int] = {}
+    for pt in points:
+        rid = pt.get("reach_id")
+        if pt.get("flag") and rid:
+            reach_votes[rid] = reach_votes.get(rid, 0) + 1
+    if not reach_votes:
+        return reaches[-1]["id"]
+    return max(reach_votes, key=lambda k: reach_votes[k])
+
+
 def pbs_analyze(
     series: list[dict[str, Any]],
     trunk: dict[str, Any],
@@ -217,50 +283,18 @@ def pbs_analyze(
     if not reaches:
         raise ValueError("trunk.reaches vazio")
 
-    points: list[dict[str, Any]] = []
-    flags: list[bool] = []
-    for p in series:
-        q_up = float(p["q_guandu_m3_s"])
-        h_up = float(p["h_guandu_m"])
-        q_del = float(p["q_delivery_total_m3_s"])
-        h_del_obs = float(p.get("h_delivery_m", h_up))
-        sim = _simulate_trunk_head(q_up, h_up, reaches)
-        cres = continuity_residual([q_up], [q_del], dV_dt_m3_s=0.0)
-        h_res = float(h_del_obs - sim["h_delivery_sim_m"])
-        headloss_total = sum(x["delta_h_m"] for x in sim["losses"])
-        cont_flag = abs(cres) >= continuity_residual_m3_s
-        head_flag = abs(h_res) >= head_residual_m
-        flagged = bool(cont_flag or head_flag)
-        if cont_flag:
-            reach_id = reaches[-1]["id"]
-        elif head_flag and sim["losses"]:
-            reach_id = max(sim["losses"], key=lambda x: abs(x["delta_h_m"]))["reach_id"]
-        else:
-            reach_id = None
-        points.append(
-            {
-                "hour": int(p["hour"]),
-                "q_guandu_m3_s": round(q_up, 6),
-                "q_delivery_total_m3_s": round(q_del, 6),
-                "h_delivery_obs_m": round(h_del_obs, 4),
-                "h_delivery_sim_m": sim["h_delivery_sim_m"],
-                "continuity_residual_m3_s": round(float(cres), 6),
-                "head_residual_m": round(h_res, 4),
-                "headloss_total_m": round(float(headloss_total), 4),
-                "flag": flagged,
-                "reach_id": reach_id,
-            }
+    points = [
+        _pbs_point(
+            p,
+            reaches,
+            head_residual_m=head_residual_m,
+            continuity_residual_m3_s=continuity_residual_m3_s,
         )
-        flags.append(flagged)
-
-    flagged_hours = [points[i]["hour"] for i, f in enumerate(flags) if f]
-    reach_votes: dict[str, int] = {}
-    for pt in points:
-        if pt["flag"] and pt["reach_id"]:
-            reach_votes[pt["reach_id"]] = reach_votes.get(pt["reach_id"], 0) + 1
-    approx_reach = (
-        max(reach_votes, key=reach_votes.get) if reach_votes else reaches[-1]["id"]
-    )
+        for p in series
+    ]
+    flags = [pt["flag"] for pt in points]
+    flagged_hours = [pt["hour"] for pt in points if pt["flag"]]
+    approx_reach = _pbs_approx_reach(points, reaches)
 
     return {
         "method": "PBS",
@@ -331,7 +365,7 @@ def analyze_series(
     ref_series: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Corre DDP+PBS sobre um fixture {data, meta}."""
-    data = fixture["data"] if "data" in fixture else fixture
+    data = fixture.get("data", fixture)
     series = data["series"]
     trunk = data["trunk"]
     sid = scenario_id or data.get("id", "alf")
