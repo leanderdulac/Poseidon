@@ -76,5 +76,5 @@ Exemplos: `situacao` | `psa` | `guandu` | `perdas_bench` | `briefing` | `hidraul
 ## Fora de F1
 
 - Atendimento cidadão → F2
-- Twin adução produção com tags PI reais → F3 (após fixtures DDP+PBS)
+- Twin adução com tags PI reais → F3 (produção). **Nota:** fixtures DDP+PBS/demo já existem no main (`src/poseidon/alf.py`, `/api/v1/alf/baseline`, `/api/v1/alf/demo/anomaly`); falta ligar medição viva Guandu→entrega.
 - Feeds COI → F4
