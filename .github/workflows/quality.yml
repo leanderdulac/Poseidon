@@ -1,0 +1,49 @@
+name: quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install package + dev deps
+        run: pip install -e ".[dev]"
+
+      - name: Ruff
+        run: ruff check src tests
+
+      - name: Mypy
+        run: mypy src/poseidon
+
+      - name: Xenon (complexity)
+        run: xenon --max-absolute B --max-modules A --max-average A src/poseidon
+
+      - name: Bandit
+        run: bandit -r src/poseidon -ll
+
+      - name: Pytest + coverage (fail_under)
+        run: |
+          mkdir -p reports
+          pytest --cov=poseidon \
+            --cov-report=term-missing \
+            --cov-report=xml:reports/coverage.xml
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: reports/
+          if-no-files-found: ignore

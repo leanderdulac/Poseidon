@@ -38,10 +38,10 @@ def test_guandu_capacity_gt_each_peer():
     assert cap["guandu_capacity_l_s"] == GUANDU_CAPACITY_L_S == 45_000
     assert len(cap["peers"]) == 3
     for peer in cap["peers"]:
-        assert GUANDU_CAPACITY_L_S > peer["l_s"], peer["label"]
+        assert peer["l_s"] < GUANDU_CAPACITY_L_S, peer["label"]
         assert peer["guandu_gt"] is True
         if "sales_l_s" in peer:
-            assert GUANDU_CAPACITY_L_S > peer["sales_l_s"]
+            assert peer["sales_l_s"] < GUANDU_CAPACITY_L_S
             assert peer["guandu_gt_sales"] is True
 
 

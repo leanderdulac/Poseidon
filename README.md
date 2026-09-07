@@ -192,6 +192,21 @@ curl -s http://127.0.0.1:8877/api/v1/alf/baseline | python3 -m json.tool | head
 curl -s -X POST http://127.0.0.1:8877/api/v1/alf/demo/anomaly | python3 -m json.tool | head
 ```
 
+
+## Qualidade determinística
+
+Portões objetivos (sem LLM no laço). Agentes F0+ só podem citar qualidade com gates verdes.
+
+```bash
+make install-dev
+make quality          # lint + mypy + xenon + bandit + coverage
+make mutate           # mutmut nos caminhos críticos (lento)
+```
+
+- Cobertura: `fail_under = 90` (baseline medido ≈ 91,8%).
+- Docs: [`docs/agents/03-qualidade-deterministica.md`](docs/agents/03-qualidade-deterministica.md)
+- CI: `.github/workflows/quality.yml` (PR/push); mutação sob `workflow_dispatch`.
+
 ## Layout
 
 ```

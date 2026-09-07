@@ -39,13 +39,12 @@ def classificar_psa(
 
     lab=None significa ausência de laudo (não inventar ng/L on-line).
     """
-    tem_lab = lab_ug_l is not None
-    lab = float(lab_ug_l) if tem_lab else 0.0
-    if (tem_lab and lab >= LIMIAR_CRITICO_UG_L) or (
-        bloom_proxy and tem_lab and lab > 0.0
-    ):
+    if lab_ug_l is None:
+        return "alerta" if bloom_proxy else "normal"
+    lab = float(lab_ug_l)
+    if lab >= LIMIAR_CRITICO_UG_L or (bloom_proxy and lab > 0.0):
         return "crítico"
-    if (tem_lab and lab >= LIMIAR_ALERTA_UG_L) or bloom_proxy:
+    if lab >= LIMIAR_ALERTA_UG_L or bloom_proxy:
         return "alerta"
     return "normal"
 
@@ -96,10 +95,11 @@ def ade_step(
     c_new = c.copy()
     # interior
     for i in range(1, n - 1):
-        if u_m_s >= 0:
-            adv = u_m_s * (c[i] - c[i - 1]) / dx_m
-        else:
-            adv = u_m_s * (c[i + 1] - c[i]) / dx_m
+        adv = (
+            u_m_s * (c[i] - c[i - 1]) / dx_m
+            if u_m_s >= 0
+            else u_m_s * (c[i + 1] - c[i]) / dx_m
+        )
         disp = d_m2_s * (c[i + 1] - 2.0 * c[i] + c[i - 1]) / (dx_m * dx_m)
         reac = k_1_s * c[i]
         c_new[i] = c[i] - dt_s * (adv - disp + reac)
@@ -109,6 +109,17 @@ def ade_step(
     c_new[-1] = c_new[-2]
     c_new[c_new < 0] = 0.0
     return c_new
+
+
+def _cin_at(cin: np.ndarray, step: int) -> float:
+    """Resolve C_in no passo temporal (escalar ou série)."""
+    if cin.ndim == 0:
+        return float(cin)
+    if cin.size == 1:
+        return float(cin[0])
+    if cin.size == 0:
+        return 0.0
+    return float(cin[min(step, cin.size - 1)])
 
 
 def ade_integrate(
@@ -127,14 +138,9 @@ def ade_integrate(
     hist[0] = c
     cin = np.asarray(c_in_series_ug_l, dtype=float)
     for n in range(n_steps):
-        c_in = float(cin[n]) if cin.ndim > 0 and cin.size > 1 else float(np.asarray(c_in_series_ug_l).reshape(-1)[0] if np.asarray(c_in_series_ug_l).size == 1 else (cin[min(n, cin.size - 1)] if cin.size else 0.0))
-        if cin.ndim == 0:
-            c_in = float(cin)
-        elif cin.size == 1:
-            c_in = float(cin[0])
-        else:
-            c_in = float(cin[min(n, cin.size - 1)])
-        c = ade_step(c, u_m_s, d_m2_s, k_1_s, dx_m, dt_s, c_in_ug_l=c_in)
+        c = ade_step(
+            c, u_m_s, d_m2_s, k_1_s, dx_m, dt_s, c_in_ug_l=_cin_at(cin, n)
+        )
         hist[n + 1] = c
     return hist
 
@@ -166,9 +172,9 @@ def pulso_geosmina(
     """
     n_steps = int(round(t_final_s / dt_s))
     n_in = int(round(duracao_s / dt_s))
-    cin = np.zeros(n_steps, dtype=float)
+    cin: np.ndarray = np.zeros(n_steps, dtype=float)
     cin[: max(n_in, 1)] = amplitude_ug_l
-    c0 = np.zeros(n_x, dtype=float)
+    c0: np.ndarray = np.zeros(n_x, dtype=float)
     hist = ade_integrate(c0, u_m_s, d_m2_s, k_1_s, dx_m, dt_s, n_steps, cin)
     length_m = (n_x - 1) * dx_m
     t_viagem = tempo_viagem_s(length_m, u_m_s) if u_m_s > 0 else float("inf")

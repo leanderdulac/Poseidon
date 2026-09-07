@@ -15,12 +15,12 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from poseidon import __version__
+from poseidon.alf import baseline_envelope, demo_anomaly_envelope
+from poseidon.benchmarks import actions_envelope, benchmarks_envelope
 from poseidon.climate import clamp_horizonte
 from poseidon.domain import INCIDENTES_FIXTURE, SISTEMAS, envelope
 from poseidon.hydraulics import headloss, joukowsky_delta_p_pa
-from poseidon.benchmarks import actions_envelope, benchmarks_envelope
 from poseidon.models import cenario_demanda, cenario_geosmina, cenario_guandu_50, psa_atual
-from poseidon.alf import baseline_envelope, demo_anomaly_envelope
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 

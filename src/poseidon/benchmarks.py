@@ -10,7 +10,7 @@ Envelope sempre com meta.live=false (fixtures de referência, não telemetria).
 from __future__ import annotations
 
 import json
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -50,7 +50,7 @@ PEER_L_S_APPROX: dict[str, dict[str, Any]] = {
 }
 
 
-class LossMethod(str, Enum):
+class LossMethod(StrEnum):
     """Métodos de perda — campos distintos; nunca misturar na mesma barra."""
 
     SINISA_PCT = "SINISA_PCT"
@@ -64,16 +64,15 @@ def _classify_loss_method(text: str | None) -> LossMethod:
     if not text:
         return LossMethod.UNKNOWN
     t = text.upper()
+    compact = t.replace(" ", "").replace("_", "")
     # Ordem importa: PUB cita "não ILI" no texto de Distribution Losses.
     if "SINISA" in t:
         return LossMethod.SINISA_PCT
     if "SISPEA" in t or "P104" in t:
         return LossMethod.SISPEA_P104
-    if "DISTRIBUTION LOSS" in t or "DISTLOSS" in t.replace(" ", "").replace("_", ""):
+    if "DISTRIBUTIONLOSS" in compact or "DISTLOSS" in compact:
         return LossMethod.DIST_LOSS_PCT
-    if t.strip().startswith("ILI") or " ILI " in f" {t} " or t.startswith("ILI "):
-        return LossMethod.ILI
-    if "ILI" in t and "DISTRIBUTION" not in t:
+    if "ILI" in t:
         return LossMethod.ILI
     return LossMethod.UNKNOWN
 
@@ -141,12 +140,12 @@ def capacity_l_s_guandu_vs_peers() -> dict[str, Any]:
             "label": info["label"],
             "kind": info["kind"],
             "l_s": info["l_s"],
-            "guandu_gt": GUANDU_CAPACITY_L_S > float(info["l_s"]),
+            "guandu_gt": float(info["l_s"]) < GUANDU_CAPACITY_L_S,
             "note": info["note"],
         }
         if "sales_l_s" in info:
             entry["sales_l_s"] = info["sales_l_s"]
-            entry["guandu_gt_sales"] = GUANDU_CAPACITY_L_S > float(info["sales_l_s"])
+            entry["guandu_gt_sales"] = float(info["sales_l_s"]) < GUANDU_CAPACITY_L_S
         peers.append(entry)
 
     return {

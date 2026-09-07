@@ -224,7 +224,7 @@ def gev_cdf(x: np.ndarray | float, mu: float, sigma: float, xi: float) -> np.nda
     t = 1.0 + xi * z
     out = np.full_like(t, np.nan, dtype=float)
     ok = t > 0
-    out[ok] = np.exp(-(t[ok] ** (-1.0 / xi)))
+    out[ok] = np.exp(-(t[ok] ** (-1.0 / xi)))  # type: ignore[index]
     return out
 
 

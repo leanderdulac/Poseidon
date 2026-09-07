@@ -39,3 +39,7 @@ secrets.json
 # Local DBs
 *.db
 *.sqlite
+reports/
+.mutmut-cache
+.coverage.*
+mutants/
